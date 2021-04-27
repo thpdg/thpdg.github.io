@@ -1,0 +1,204 @@
+<html>
+<head>
+    <link rel="stylesheet" href="COVID.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <title>Connecticut Town By Town COVID Data</title>
+</head>
+<body>
+    <h1>Connecticut Town By Town COVID Data</h1>
+    <div class="dropdown">
+        <input type="text" placeholder="Search Towns.." id="myInput" class="searchbox" onkeyup="filterFunction()">
+        <div id="myDropdown" class="dropdown-content">
+        </div>
+      </div>
+    <div id="chart" style="width:auto; height:600px;"></div> 
+</body>
+<script>
+    // Close the dropdown menu if the user clicks outside of it
+    window.onclick = function(event) {
+        if (!event.target.matches('.searchbox')) {
+            var dropdowns = document.getElementsByClassName("dropdown-content");
+            var i;
+            for (i = 0; i < dropdowns.length; i++) {
+                var openDropdown = dropdowns[i];
+                if (openDropdown.classList.contains('show')) {
+                    openDropdown.classList.remove('show');
+                }
+            }
+        }
+    }
+
+    populateDropdown();
+
+    google.charts.load('visualization', { packages: ['corechart'] });
+    google.charts.setOnLoadCallback(drawLineChart);
+
+    var cityPopulation = "777"
+    
+    let searchParams = new URLSearchParams(window.location.search)
+    if(searchParams.has('town')) {
+        toSearch = searchParams.get('town');
+    }
+    else {
+        toSearch = 'East%20Granby';
+    }
+    findCityPopulation()
+
+    var myURL = "https://data.ct.gov/resource/28fr-iqnx.json?town=" + toSearch + "&$order=lastupdatedate%20ASC";   
+     
+
+    function dropDownOpened() {
+        document.getElementById("myDropdown").classList.add("show");
+    }
+
+    function filterFunction() {
+        var input, filter, ul, li, a, i;
+        dropDownOpened();
+        input = document.getElementById("myInput");
+        filter = input.value.toUpperCase();
+        div = document.getElementById("myDropdown");
+        a = div.getElementsByTagName("a");
+        for (i = 0; i < a.length; i++) {
+            txtValue = a[i].textContent || a[i].innerText;
+            if (txtValue.toUpperCase().indexOf(filter) > -1) {
+            a[i].style.display = "";
+            } else {
+            a[i].style.display = "none";
+            }
+        }
+    }
+
+
+    function drawLineChart() {
+        if(cityPopulation == '777') {
+            console.log("Population was default, hopefully this wastes enough time!")
+        }
+
+        $.ajax({
+            url: myURL,
+            dataType: "json",
+            type: "GET",
+            contentType: "application/json; charset=utf-8",
+            success: function (data) {
+                //var arrSales = [['Date', 'Confirmed Cases', 'Cases / 100K', 'Deaths','Tests / 100K','% Tests Positive']];    // Define an array and assign columns for the chart.
+                var arrSales = [['Date', 'New Cases', 'Deaths','Daily Tests','% Daily Tests Positive']];    // Define an array and assign columns for the chart.
+                var city = "Downtown"
+                var previousCases = 0
+                var previousTests = 0
+                var previousPositive = 0
+                var totalCases = 0
+
+                // Loop through each data and populate the array.
+                $.each(data, function (index, value) {
+                    newCases =  parseInt(value.towntotalcases) - previousCases
+                    if(newCases < 1) {
+                        newCases = 0
+                    }
+                    newPositives = parseInt(value.numberofpositives) - previousPositive
+                    if(newPositives < 0) newPositives = 0
+                    newTests = parseInt(value.numberoftests) - previousTests
+                    if(newTests < 1) {
+                        newTests = 0
+                        positivePercentage = 0
+                    }
+                    else {
+                        positivePercentage = newPositives/newTests*100
+                    }                    
+                    console.log(value.lastupdatedate.substring(0,10) + " - Previous Tests (Positive) " + previousTests + "(" + previousPositive + ") Current Tests (Positive) " + parseInt(value.numberoftests) + "(" + parseInt(value.numberofpositives) + ") Percentage new positive " + positivePercentage)
+                    arrSales.push([value.lastupdatedate.substring(0,10), newCases, parseInt(value.towntotaldeaths),newTests,positivePercentage]);
+                    previousCases = parseInt(value.towntotalcases)
+                    previousTests = parseInt(value.numberoftests)
+                    previousPositive = parseInt(value.numberofpositives)
+                    totalCases = parseInt(value.towntotalcases)
+
+                    city = value.town;
+                });
+
+                // Set chart Options.
+                var options = {
+                    title: 'Daily Infections for ' + city + "  ( Total Cases " + totalCases + " of population " + cityPopulation + " )",
+                    // curveType: 'function',
+                    // pointSize: 3,
+                    series: {
+                        0: {targetAxisIndex: 1},
+                        1: {targetAxisIndex: 0},
+                        2: {targetAxisIndex: 0},
+                        3: {targetAxisIndex: 1},
+                    },
+                    vAxes: {
+                        // Adds titles to each axis.
+                        0: {title: 'Deaths / Daily Tests'},
+                        1: {title: 'New Cases / % Positive'}
+                    },
+                    legend: { position: 'bottom', textStyle: { color: '#555', fontSize: 24} }  // You can position the legend on 'top' or at the 'bottom'.
+                };
+
+                // Create DataTable and add the array to it.
+                var figures = google.visualization.arrayToDataTable(arrSales)
+
+                // Define the chart type (LineChart) and the container (a DIV in our case).
+                var chart = new google.visualization.LineChart(document.getElementById('chart'));
+                chart.draw(figures, options);      // Draw the chart with Options.
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                alert('Got an Error');
+            }
+        });
+    }
+
+    function populateDropdown() {
+        let townListURL = "https://data.ct.gov/resource/28fr-iqnx.json?$select=town_no,town&$group=town_no,town&$order=town_no";
+        $.ajax({
+            url: townListURL,
+            dataType: "json",
+            type: "GET",
+            contentType: "application/json; charset=utf-8",
+            success: function (data) {
+                var arrTowns = [['town_no', 'town_name']];    // Define an array and assign columns for the chart.
+                var selected = "Downtown"
+
+                var myTownListDropDownContainer = document.getElementById("myDropdown");
+
+                // Loop through each data and populate the array.
+                $.each(data, function (index, value) {
+                    arrTowns.push([value.town_no,value.town]);
+                    var aTag = document.createElement('a');
+                    aTag.setAttribute('href','COVIDChart.htm?town=' + value.town);
+                    aTag.innerText = value.town;
+                    myTownListDropDownContainer.appendChild(aTag);
+                });
+                selected = arrTowns[1][1];
+                console.log("First Town: " + selected);
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                alert('Got an Error Loading Town Name');
+            }
+        });
+    }
+
+    function findCityPopulation() {
+        //let populationURL = "https://data.ct.gov/resource/spwv-a9en.json?town=" + toSearch + "%20"
+        let populationURL = "https://data.ct.gov/resource/spwv-a9en.json?$where=starts_with(town,%27" + toSearch + "%27)"
+        $.ajax({
+            url: populationURL,
+            dataType: "json",
+            type: "GET",
+            contentType: "application/json; charset=utf-8",
+            success: function (data) {
+                var arrTowns = [['town', '_2020_total']];    // Store results
+
+                // Loop through each data and populate the array.
+                $.each(data, function (index, value) {
+                    cityPopulation = parseInt(value._2020_total).toLocaleString()
+                    console.log("Population of " + value.town + ": " + value._2020_total);
+                });
+                console.log("Final Population of " + toSearch + ": " + cityPopulation);
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                alert('Got an Error Loading Town Population');
+            }
+        });
+    }
+</script>
+</html>
