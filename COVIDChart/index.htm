@@ -164,7 +164,7 @@
                 $.each(data, function (index, value) {
                     arrTowns.push([value.town_no,value.town]);
                     var aTag = document.createElement('a');
-                    aTag.setAttribute('href','COVIDChart.htm?town=' + value.town);
+                    aTag.setAttribute('href','index.htm?town=' + value.town);
                     aTag.innerText = value.town;
                     myTownListDropDownContainer.appendChild(aTag);
                 });
