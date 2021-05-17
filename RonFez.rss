@@ -34,7 +34,7 @@
     <itunes:summary>Ron & Fez - January 18, 2006 (its)</itunes:summary>
     <description>Ron & Fez - January 18, 2006</description>
     <link>http://example.com/podcast-1</link>
-    <enclosure url="https://archive.org/download/RF-2006-01/R%26F-2006-01-18mp3" type="audio/mpeg" length="1024"></enclosure>
+    <enclosure url="https://archive.org/download/RF-2006-01/R%26F-2006-01-18.mp3" type="audio/mpeg" length="1024"></enclosure>
     <pubDate>Tue, 18 Jan 2006 12:01:07 +0000</pubDate>
     <itunes:author>Author Name</itunes:author>
     <itunes:duration>02:42:43</itunes:duration>
