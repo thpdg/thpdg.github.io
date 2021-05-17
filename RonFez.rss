@@ -13,12 +13,12 @@
     <itunes:email>me@example.com</itunes:email>
 </itunes:owner>
 <itunes:explicit>no</itunes:explicit>
-<itunes:image href="http://www.example.com/podcast-icon.jpg" />
+<itunes:image href="http://www.opieandanthony.homestead.com/files/Ron_FezXM.jpg" />
 <itunes:category text="Category Name"/></itunes:category>
 
 <!--REPEAT THIS BLOCK FOR EACH EPISODE-->
 <item>
-    <title>Title of Podcast Episode</title>
+    <title>Ron & Fez - January 17, 2006</title>
     <itunes:summary>Description of podcast episode content</itunes:summary>
     <description>Description of podcast episode content</description>
     <link>http://example.com/podcast-1</link>
@@ -30,12 +30,12 @@
     <guid>http://example.com/podcast-1</guid>
 </item> 
 <item>
-    <title>Title of Podcast Episode 2</title>
-    <itunes:summary>Description of podcast episode content</itunes:summary>
-    <description>Description of podcast episode content</description>
+    <title>Ron & Fez - January 18, 2006</title>
+    <itunes:summary>Ron & Fez - January 18, 2006 (its)</itunes:summary>
+    <description>Ron & Fez - January 18, 2006</description>
     <link>http://example.com/podcast-1</link>
     <enclosure url="https://archive.org/download/RF-2006-01/R%26F-2006-01-18mp3" type="audio/mpeg" length="1024"></enclosure>
-    <pubDate>Mon, 18 Jan 2006 12:01:07 +0000</pubDate>
+    <pubDate>Tue, 18 Jan 2006 12:01:07 +0000</pubDate>
     <itunes:author>Author Name</itunes:author>
     <itunes:duration>02:42:43</itunes:duration>
     <itunes:explicit>no</itunes:explicit>
