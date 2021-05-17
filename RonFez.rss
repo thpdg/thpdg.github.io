@@ -27,7 +27,7 @@
     <itunes:author>Author Name</itunes:author>
     <itunes:duration>02:42:43</itunes:duration>
     <itunes:explicit>no</itunes:explicit>
-    <guid>http://example.com/podcast-1</guid>
+    <guid>http://example.com/podcast-1zzz</guid>
 </item> 
 <item>
     <title>Ron & Fez - January 18, 2006</title>
@@ -39,7 +39,7 @@
     <itunes:author>Author Name</itunes:author>
     <itunes:duration>02:42:43</itunes:duration>
     <itunes:explicit>no</itunes:explicit>
-    <guid>http://example.com/podcast-1</guid>
+    <guid>http://example.com/podcast-1zzz</guid>
 </item> 
 <!--END REPEAT--> 
    
