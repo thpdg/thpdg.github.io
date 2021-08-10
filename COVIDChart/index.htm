@@ -35,6 +35,7 @@
     google.charts.setOnLoadCallback(drawLineChart);
 
     var cityPopulation = "777"
+    var vaccineRateString = "No Data"
     
     let searchParams = new URLSearchParams(window.location.search)
     if(searchParams.has('town')) {
@@ -117,7 +118,7 @@
 
                 // Set chart Options.
                 var options = {
-                    title: 'Daily Infections for ' + city + "  ( Total Cases " + totalCases + " of population " + cityPopulation + " )",
+                    title: 'Daily Infections for ' + city + "  ( Total Cases " + totalCases + " of population " + cityPopulation + " )  Vaccine Rates: " + vaccineRateString,
                     // curveType: 'function',
                     // pointSize: 3,
                     series: {
@@ -179,19 +180,20 @@
 
     function findCityPopulation() {
         //let populationURL = "https://data.ct.gov/resource/spwv-a9en.json?town=" + toSearch + "%20"
-        let populationURL = "https://data.ct.gov/resource/spwv-a9en.json?$where=starts_with(town,%27" + toSearch + "%27)"
+        let populationURL = "https://data.ct.gov/resource/x7by-h8k4.json?$limit=1&$order=dateupdated%20DESC&$where=starts_with(town,%27" + toSearch + "%27)"
         $.ajax({
             url: populationURL,
             dataType: "json",
             type: "GET",
             contentType: "application/json; charset=utf-8",
             success: function (data) {
-                var arrTowns = [['town', '_2020_total']];    // Store results
+                var arrTowns = [['town', 'population']];    // Store results
 
                 // Loop through each data and populate the array.
                 $.each(data, function (index, value) {
-                    cityPopulation = parseInt(value._2020_total).toLocaleString()
-                    console.log("Population of " + value.town + ": " + value._2020_total);
+                    cityPopulation = parseInt(value.population).toLocaleString()
+                    vaccineRateString = value.initiated_vaccination + " (" + value.initiated_vaccination_percent + "%) / " + value.fully_vaccinated + " (" + value.fully_vaccinated_percent + "%)"
+                    console.log("Population of " + value.town + ": " + value.population);
                 });
                 console.log("Final Population of " + toSearch + ": " + cityPopulation);
             },
