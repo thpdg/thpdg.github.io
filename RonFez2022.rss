@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd" version="2.0">
+<channel>
+<title>Ron And Fez Archives - January 2006</title>
+<link>http://www.examplelink.com/<link>
+<language>en-us</language>
+<pubDate>Wed, 4 May 2022 00:50:20 +0000</pubDate>
+<lastBuildDate>Wed, 4 May 2022 00:50:36 +0000</lastBuildDate>
+<itunes:subtitle>Archive Dot Org MP3s</itunes:subtitle>
+<itunes:author>Author Name</itunes:author>
+<itunes:summary>Archive Dot Org MP3s As A Podcast (its)</itunes:summary>
+<description>Archive Dot Org MP3s As A Podcast</description>
+<itunes:owner>
+    <itunes:name>Owner Name</itunes:name>
+    <itunes:email>me@example.com</itunes:email>
+</itunes:owner>
+<itunes:explicit>no</itunes:explicit>
+<itunes:image href="http://www.opieandanthony.homestead.com/files/Ron_FezXM.jpg" />
+<itunes:category text="Category Name"/></itunes:category>
+
+<!--REPEAT THIS BLOCK FOR EACH EPISODE-->
+<item>
+    <title>Ron & Fez - January 17, 2006</title>
+    <itunes:summary>Ron & Fez - January 17, 2006 (its)</itunes:summary>
+    <description>Ron & Fez - January 17, 2006</description>
+    <link>http://example.com/podcast-1</link>
+    <enclosure url="https://archive.org/download/RF-2006-01/R%26F-2006-01-17.mp3" type="audio/mpeg" length="1024"></enclosure>
+	<pubDate>Tue, 26 Apr 2022 19:19:43 +0000</pubDate>
+    <itunes:author>Author Name</itunes:author>
+    <itunes:duration>02:42:43</itunes:duration>
+    <itunes:explicit>no</itunes:explicit>
+    <guid>http://example.com/podcast-1zzz</guid>
+</item> 
+<item>
+    <title>Ron & Fez - January 18, 2006</title>
+    <itunes:summary>Ron & Fez - January 18, 2006 (its)</itunes:summary>
+    <description>Ron & Fez - January 18, 2006</description>
+    <link>http://example.com/podcast-1</link>
+    <enclosure url="https://archive.org/download/RF-2006-01/R%26F-2006-01-18.mp3" type="audio/mpeg" length="1024"></enclosure>
+    <pubDate>Wed, 20 Apr 2022 02:34:02 +0000</pubDate>
+    <itunes:author>Author Name</itunes:author>
+    <itunes:duration>02:42:43</itunes:duration>
+    <itunes:explicit>no</itunes:explicit>
+    <guid>http://example.com/podcast-1zzz</guid>
+</item> 
+<!--END REPEAT--> 
+   
+</channel>
+</rss>
+
+
